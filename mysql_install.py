@@ -103,22 +103,22 @@ class Install_Mysql(object):
     def minio_get(self):
         if not os.path.exists(self.datadir) and not os.path.exists(self.cnfdir):
             if not os.path.exists(f"{self.perfix}/bin"):
-                if not os.path.exists(f'/root/rayman-mysql-{self.myversion}.tar.gz'):
+                if not os.path.exists(f'/root/***-mysql-{self.myversion}.tar.gz'):
                     if self.uploadtype == 'local':
-                        logger.error(f"文件不存在 /root/rayman-mysql-{self.myversion}.tar.gz")
+                        logger.error(f"文件不存在 /root/***-mysql-{self.myversion}.tar.gz")
                         exit()
                     else:
-                        logger.info(f"正在下载rayman-mysql-{self.myversion}.tar.gz")
+                        logger.info(f"正在下载***-mysql-{self.myversion}.tar.gz")
                         from minio import Minio
                         minioClient = Minio('10.1.0.97:9199',
                                             access_key='getpkgkey',
                                             secret_key='RbDd78a8Z7A7w',
                                             secure=False,
                                             region='cn-shenzhen-01')
-                        minioClient.fget_object('rayman-db-pkg',
-                                                f'rayman-mysql-{self.myversion}.tar.gz',
-                                                f'/root/rayman-mysql-{self.myversion}.tar.gz')
-                self.extract(f'/root/rayman-mysql-{self.myversion}.tar.gz', self.perfix)
+                        minioClient.fget_object('***-db-pkg',
+                                                f'***-mysql-{self.myversion}.tar.gz',
+                                                f'/root/***-mysql-{self.myversion}.tar.gz')
+                self.extract(f'/root/***-mysql-{self.myversion}.tar.gz', self.perfix)
             os.makedirs(self.datadir)
             os.makedirs(self.cnfdir)
         else:
@@ -297,7 +297,7 @@ class Install_Mysql(object):
                 logger.info("构建MS复制模式成功")
         else:
             logger.info("构建MGR复制模式")
-            mgr_sql = ("CHANGE MASTER TO MASTER_USER = 'repluser', MASTER_PASSWORD = '4cmOlKRkX1H7k' FOR "
+            mgr_sql = ("CHANGE MASTER TO MASTER_USER = 'repluser', MASTER_PASSWORD = '******' FOR "
                         "CHANNEL 'group_replication_recovery'")
             cursor.execute(mgr_sql)
             if f"{ip}:{self.myport}" == self.createdb[0]:
